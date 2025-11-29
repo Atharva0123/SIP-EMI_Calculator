@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP-EMI Pro | Pro Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="bg-shapes">
+        <div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav class="glass">
+                <div class="logo" onclick="showPage('home')">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    <span>SIP-EMI Pro</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" onclick="showPage('home')" class="active">Calculator</a>
+                    <a href="#" onclick="showPage('about')">About</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="home" class="page active">
+        <div class="container">
+            <div class="content-wrapper">
+                
+                <div class="calc-tabs">
+                    <button class="tab-btn active" onclick="setMainMode('investment')">Investment</button>
+                    <button class="tab-btn" onclick="setMainMode('emi')">Loan / EMI</button>
+                </div>
+
+                <div class="calculator-wrapper">
+                    
+                    <div class="input-card glass">
+                        
+                        <div class="sub-tabs" id="invest-type-tabs">
+                            <button class="sub-tab-btn active" onclick="setInvestType('sip')">SIP</button>
+                            <button class="sub-tab-btn" onclick="setInvestType('lumpsum')">Lumpsum</button>
+                            <button class="sub-tab-btn" onclick="setInvestType('goal')">Goal SIP</button>
+                        </div>
+
+                        <h3 style="margin-bottom: 25px; font-weight: 400; color: #00d2ff;" id="input-title">Monthly Investment</h3>
+
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label id="lbl-1">I want to invest</label>
+                                <div class="input-box-wrapper">
+                                    <input type="number" id="inp-1" value="5000" oninput="syncSlider('1')">
+                                    <span class="currency-symbol">₹</span>
+                                </div>
+                            </div>
+                            <div class="freq-options" id="freq-row">
+                                <button class="freq-btn active" onclick="setFreq('daily')">Daily</button>
+                                <button class="freq-btn" onclick="setFreq('weekly')">Weekly</button>
+                                <button class="freq-btn" onclick="setFreq('monthly')">Monthly</button>
+                                <button class="freq-btn" onclick="setFreq('quarterly')">Quarterly</button>
+                            </div>
+                            <input type="range" id="rng-1" min="500" max="100000" step="500" value="5000" oninput="syncInput('1')">
+                        </div>
+
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label id="lbl-2">Time Period</label>
+                                <div class="input-box-wrapper">
+                                    <input type="number" id="inp-2" value="10" oninput="syncSlider('2')">
+                                    <span class="currency-symbol">Yr</span>
+                                </div>
+                            </div>
+                            <input type="range" id="rng-2" min="1" max="50" step="1" value="10" oninput="syncInput('2')">
+                        </div>
+
+                        <div class="input-group">
+                            <div class="label-row">
+                                <label id="lbl-3">Expected Return (p.a)</label>
+                                <div class="input-box-wrapper">
+                                    <input type="number" id="inp-3" value="12" oninput="syncSlider('3')">
+                                    <span class="currency-symbol">%</span>
+                                </div>
+                            </div>
+                            <input type="range" id="rng-3" min="1" max="30" step="0.5" value="12" oninput="syncInput('3')">
+                        </div>
+
+                    </div>
+
+                    <div class="results-card glass">
+                        <div style="text-align: center;">
+                            <span style="font-size: 0.9rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px;" id="res-lbl-main">Total Wealth</span>
+                            <h1 style="font-size: 2.5rem; margin: 5px 0; background: linear-gradient(to right, #fff, #00d2ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;" id="res-val-main">₹ 11.62 L</h1>
+                        </div>
+
+                        <div class="chart-container">
+                            <canvas id="myPieChart"></canvas>
+                        </div>
+                         <div class="chart-container" style="height: 180px; margin-top: 10px;">
+                            <canvas id="myLineChart"></canvas>
+                        </div>
+
+                        <div class="stats-grid">
+                            <div class="stat-box">
+                                <div class="stat-label" id="res-lbl-1">Invested</div>
+                                <div class="stat-val" id="res-val-1">₹ 6 L</div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-label" id="res-lbl-2">Returns</div>
+                                <div class="stat-val" style="color: #00d2ff;" id="res-val-2">₹ 5.62 L</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page">
+        <div class="container">
+            <div class="content-wrapper glass" style="padding: 40px; margin-top: 20px;">
+                <h2>About SIP-EMI Pro</h2>
+                <p style="margin-top: 20px; line-height: 1.6; opacity: 0.8;">A comprehensive financial tool designed to simplify your investment planning. Whether you are looking at mutual fund SIPs, lumpsum investments, or planning your loan EMIs, FinGlass provides instant, browser-based calculations with visual breakdowns.</p>
+                
+                <div class="faq-container">
+                    <h3 style="margin-top: 40px; margin-bottom: 20px; color: #fff;">Frequently Asked Questions (FAQ)</h3>
+
+                    <h4 style="margin-top: 20px; color: #00d2ff;">Investment & SIP</h4>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What is a SIP Calculator?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>A SIP (Systematic Investment Plan) calculator is a tool used to estimate the future value of your SIP investments. It uses the input variables—SIP amount, investment period, and expected rate of return—to project the potential maturity amount. </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How can a SIP Calculator Help You?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>It helps you determine how much you need to invest periodically to reach a specific financial goal (Goal SIP), or estimate the wealth you can create by a certain time. It's crucial for financial planning, goal setting, and understanding the power of compounding and rupee cost averaging.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>SIP Calculator Formula?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The Future Value (FV) for a SIP is typically calculated using the compound interest formula for annuities: $$FV = P \times \frac{(1 + i)^n - 1}{i} \times (1 + i)$$ Where: $P$ is the periodic investment amount, $i$ is the periodic rate of interest ($R / 100 / f$), and $n$ is the total number of periods ($N \times f$).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Types of SIPs In India?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Common types include Regular SIP (fixed amount, fixed intervals), Top-up or Step-up SIP (allows for increasing the investment amount periodically), and Flexible SIP (allows changing the SIP amount/date based on your financial situation).</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>Tax Implications of SIP Investments on above calculation?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The calculation tool provides an *estimate* of growth, but it does not deduct tax. Taxes (Capital Gains Tax) are applied upon redemption and depend on the holding period and the type of fund (equity vs. debt). Long-Term Capital Gains (LTCG) receive preferential tax treatment compared to Short-Term Capital Gains (STCG).</p>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 40px; color: #00d2ff;">Loan & EMI</h4>
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What is an EMI Calculator?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>An EMI (Equated Monthly Installment) calculator helps borrowers estimate the fixed amount they must pay to the lender each month to repay the loan over a specified period. It ensures the total principal and interest are repaid fully by the end of the loan term. </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>How is EMI Calculated?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The formula for calculating EMI is: $$EMI = P \times r \times \frac{(1+r)^n}{(1+r)^n - 1}$$ Where: $P$ is the Principal Loan Amount, $r$ is the monthly interest rate ($R / 12 / 100$), and $n$ is the total number of months (Loan Term in Years $\times 12$).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What factors affect my EMI?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>The three core factors are the **Principal Loan Amount**, the **Interest Rate** (a higher rate means higher EMI), and the **Loan Tenure** (a longer tenure means lower EMI, but higher total interest paid).</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            <span>What is pre-payment and how does it help?</span>
+                            <span class="icon">+</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Pre-payment is paying off a portion of the principal loan amount before the scheduled due date. It reduces the outstanding principal, which in turn reduces the total interest paid over the life of the loan, either by lowering the EMI or shortening the loan tenure.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        &copy; 2025 SIP-EMI Pro Calculator.
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
