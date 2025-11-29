@@ -139,9 +139,9 @@ echo 'INSERT-TEST-COMMAND-HERE'
 ---
 ## 📌 Project Roadmap
 
-- [X] **`Task 1`**: <strike>Implement feature one.</strike>
-- [ ] **`Task 2`**: Implement feature two.
-- [ ] **`Task 3`**: Implement feature three.
+- [X] **`Task 1`**: <strike>Implement performance charts.</strike>
+- [ ] **`Task 2`**: Implement feature PWA support for offline use.
+- [ ] **`Task 3`**: Implement feature PDF export of results.
 
 ---
 
