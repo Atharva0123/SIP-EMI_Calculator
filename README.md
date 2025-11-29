@@ -130,8 +130,7 @@ echo 'INSERT-INSTALL-COMMAND-HERE'
 
 
 ### 🤖 Usage
-Run SIP-EMI_Calculator using the following command:
-echo 'INSERT-RUN-COMMAND-HERE'
+Link- https://sipemicalculator.vercel.app/
 
 ### 🧪 Testing
 Run the test suite using the following command:
